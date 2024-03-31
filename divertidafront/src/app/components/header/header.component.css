@@ -1,0 +1,14 @@
+.container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.social-icons-widget a:hover {
+    transform: scale(1.5);
+    color: rgb(239, 195, 100);
+}
+
+.header-image {
+    margin-left: 5%;
+}
