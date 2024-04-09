@@ -1,18 +1,18 @@
 export const environment = {
     production: true,
   
-    baseUrl: 'https://192.168.137:8081/',
+    baseUrl: 'http://192.168.1.137:8081/',
   
-    userUrl: 'https://192.168.137:8081/person',
+    userUrl: 'http://192.168.1.137:8081/person',
   
-    videoUrl: 'https://192.168.137:8081/video',
+    videoUrl: 'http://192.168.1.137:8081/video',
   
-    blogUrl: 'https://192.168.137:8081/blog',
+    blogUrl: 'http://192.168.1.137:8081/blog',
   
-    eventUrl: 'https://192.168.137:8081/events',
+    eventUrl: 'http://192.168.1.137:8081/events',
 
-    storyUrl: 'https://192.168.137:8081/story',
+    storyUrl: 'http://192.168.1.137:8081/story',
 
-    riddlesUrl: 'https://192.168.137:8081/riddles'
+    riddlesUrl: 'http://192.168.1.137:8081/riddles'
 
   };
