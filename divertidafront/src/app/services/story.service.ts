@@ -19,13 +19,18 @@ export class StoryService {
   }
 
   async getStoriesByCategory(category: string): Promise<Stories[]> {
-    const result = await this._http.get<Stories[]>(`${this.apiUrl}/storiesByCategory/${category}`).toPromise();
-    
-    if (result?.length === 0 || result === undefined || result === null) {
-      console.error('La respuesta del servidor es indefinida.');
+    try {
+      const result = await this._http.get<Stories[]>(`${this.apiUrl}/storiesByCategory/${category}`).toPromise();
+
+      if (result?.length === 0 || result === undefined || result === null) {
+        console.error('La respuesta del servidor es indefinida.');
+        return [];
+      }
+
+      return result;
+    } catch (error) {
+      console.error('Error al obtener los cuentos de la categoría ${category}', error);
       return [];
     }
-
-    return result;
   }
 }
