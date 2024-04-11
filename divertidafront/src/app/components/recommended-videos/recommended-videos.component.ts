@@ -4,6 +4,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { VideosService } from '../../services/videos.service';
 import { StorageService } from '../../services/storage.service';
 import { Video } from '../interfaces/videos';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-recommended-videos',
@@ -17,7 +19,7 @@ export class RecommendedVideosComponent implements OnInit {
   slideWidth = 0;
   favoriteVideosIds: Set<number> = new Set<number>();
 
-  constructor(private _videosService: VideosService, private _storageService: StorageService, private _sanitizer: DomSanitizer) { }
+  constructor(private _videosService: VideosService, private _storageService: StorageService, private _sanitizer: DomSanitizer, private _router: Router) { }
 
   ngOnInit(): void {
     this._videosService.getRecommendedVideos().subscribe((videos: Video[]) => {
@@ -43,6 +45,9 @@ export class RecommendedVideosComponent implements OnInit {
         }
       } catch (err: any) {
        console.log("ERROR: Al añadir a la lista de favoritos.");
+       this._router.navigate(['/error']).then(() => {
+        window.location.reload();
+      });
       }
     } else {
      console.log('Tienes que loguearte o registrarte. Ve a la página Inicio');

@@ -3,22 +3,24 @@ import { VideosService } from '../../services/videos.service';
 import { StorageService } from '../../services/storage.service';
 import { Video } from '../interfaces/videos';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
-type VideoProperty = "title" | "descriptions" | "category";
+type VideoProperty = "title" | "description" | "category";
 @Component({
   selector: 'app-videos',
   templateUrl: './videos.component.html',
   styleUrl: './videos.component.css'
 })
-export class VideosComponent implements OnInit{
+export class VideosComponent implements OnInit {
 
-  constructor(private _videosService: VideosService, private _storageService: StorageService, private _sanitizer: DomSanitizer) {
+  constructor(private _videosService: VideosService, private _storageService: StorageService, private _sanitizer: DomSanitizer, private _router: Router) {
   }
 
   public selectedCategory: VideoProperty = "title";
   public searchTerm: string = '';
+  category: string = '';
 
-  public categories: string[] = [];
+  public selectedOptions: string[] = [];
   filteredVideos: Video[] = [];
   videos: Video[] = [];
 
@@ -40,24 +42,56 @@ export class VideosComponent implements OnInit{
       this._videosService.getVideos().subscribe((videos) => {
         this.filteredVideos = videos;
 
-        this.categories = ['title', 'descriptions', 'category'];
+        this.selectedOptions = ['title', 'description', 'category'];
 
-        if (this.categories.includes(this.selectedCategory)) {
-          let findSelectedCategory: Video[] = this.filteredVideos.filter(item => {
-            return item[this.selectedCategory] && item[this.selectedCategory].toString().toLowerCase().includes(this.searchTerm.toLowerCase());
-          });
-
-          if (findSelectedCategory.length === 0) {
-            this.filteredVideos = [];
-            return;
-          }
+        if (this.selectedCategory === 'category') {
+          this.filterByCategory();
+        } else {
+          this.filterByTitleOrDescription();
         }
       });
 
     } catch (err: any) {
       console.log("ERROR: Al filtrar los vídeos.");
+      this._router.navigate(['/error']).then(() => {
+        window.location.reload();
+      });
       this.filteredVideos = [];
     }
+  }
+
+  filterByTitleOrDescription() {
+    // Realizar búsqueda por título o descripción
+    this._videosService.getVideos().subscribe((videos) => {
+      this.filteredVideos = videos.filter(item => {
+        return (item.title && item.title.toLowerCase().includes(this.searchTerm.toLowerCase())) ||
+          (item.description && item.description.toLowerCase().includes(this.searchTerm.toLowerCase()));
+      });
+
+      if (this.filteredVideos.length === 0) {
+        this.filteredVideos = [];
+        this._router.navigate(['/error']).then(() => {
+          window.location.reload();
+        });
+        return;
+      }
+    });
+  }
+
+ async filterByCategory() {
+
+    this.searchTerm = this.category.toLowerCase();
+
+    this.filteredVideos = await this._videosService.getVideosByCategories(this.category);
+
+    if (this.filteredVideos.length === 0 || this.filteredVideos === undefined) {
+      this.filteredVideos = [];
+      this._router.navigate(['/error']).then(() => {
+        window.location.reload();
+      });
+      return;
+    }
+     return this.filteredVideos;
   }
 
   async editFavorite(idVideo: number) {
@@ -74,7 +108,7 @@ export class VideosComponent implements OnInit{
           console.log('Añadido correctamente a tu lista de favoritos.');
         }
       } catch (err: any) {
-       console.log("ERROR: Al añadir el vídeo a favoritos.");
+        console.log("ERROR: Al añadir el vídeo a favoritos.");
       }
     } else {
       console.log('Tienes que loguearte o registrarte. Ve a la página Inicio');

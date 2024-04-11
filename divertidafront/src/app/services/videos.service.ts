@@ -16,9 +16,9 @@ export class VideosService {
   getVideos(): Observable<Video[]> {
     return this._http.get<Video[]>(this.apiUrl);
   }
-  
+
   getRecommendedVideos() {
-    return this._http.get<Video[]>(`${this.apiUrl}/recomended`);
+    return this._http.get<Video[]>(`${this.apiUrl}/recommended`);
   }
 
   async addFavoriteVideo(idVideo: number, idPerson: number) {
@@ -58,6 +58,23 @@ export class VideosService {
         return [];
       }
     } else {
+      return [];
+    }
+  }
+
+  async getVideosByCategories(category: string): Promise<Video[]> {
+
+    try {
+      const result = await this._http.get<Video[]>(`${this.apiUrl}/categories/${category}`).toPromise();
+
+      if (result?.length === 0 || result === undefined || result === null) {
+        console.error('La respuesta del servidor es indefinida.');
+        return [];
+      }
+
+      return result;
+    } catch (error) {
+      console.error('Error al obtener las categorías de las manualidades', error);
       return [];
     }
   }

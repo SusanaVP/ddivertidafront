@@ -1,8 +1,7 @@
 export interface Video {
     id: number;
     title: string;
-    descriptions: string;
+    description: string;
     url: string;
-    recomended: string;
-    category: string;
+    recomended: boolean;
   }
