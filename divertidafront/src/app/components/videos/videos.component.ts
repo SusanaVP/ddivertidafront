@@ -94,41 +94,6 @@ export class VideosComponent implements OnInit {
     }
   }
 
-  // filterByTitleOrDescription() {
-  //   // Realizar búsqueda por título o descripción
-  //   this._videosService.getVideos().subscribe((videos) => {
-  //     this.filteredVideos = videos.filter(item => {
-  //       return (item.title && item.title.toLowerCase().includes(this.searchTerm.toLowerCase())) ||
-  //         (item.description && item.description.toLowerCase().includes(this.searchTerm.toLowerCase()));
-  //     });
-
-  //     if (this.filteredVideos.length === 0) {
-  //       this.filteredVideos = [];
-  //       this._router.navigate(['/error']).then(() => {
-  //         window.location.reload();
-  //       });
-  //       return;
-  //     }
-  //   });
-  // }
-
-  // async filterByCategory(searchTerm: string) {
-  //   try {
-  //     const category = this.searchTerm.toLowerCase();
-  //     this.filteredVideos = await this._videosService.getVideosByCategories(category);
-
-  //     if (this.filteredVideos.length === 0) {
-  //       console.log("Losiento no hay vídeos con esa categorías");
-  //     }
-  //   } catch (err) {
-  //     this._router.navigate(['/error']).then(() => {
-  //       window.location.reload();
-  //     });
-  //     console.log(err);
-  //     this.filteredVideos = [];
-  //   }
-  // }
-
   async editFavorite(idVideo: number) {
     const idPerson = await this._storageService.getUserId('loggedInUser');
     const favoritesVideos = await this._videosService.getFavoritesVideos();
