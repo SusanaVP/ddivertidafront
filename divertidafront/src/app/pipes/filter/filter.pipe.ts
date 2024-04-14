@@ -9,9 +9,14 @@ export class FilterPipe implements PipeTransform {
     if (value == null || value == undefined || value.length == 0) {
       return [];
     }
-    return value.filter((elemento: any) => {
-
-      return elemento[selectedCategory].toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
+    return value.filter((element: any) => {
+      if (selectedCategory === 'category' && element.categoriesVideo && element.categoriesVideo.nameCategory) {
+        return element.categoriesVideo.nameCategory.toLowerCase().includes(searchTerm.toLowerCase());
+      } else if (element[selectedCategory]) {
+        return element[selectedCategory].toLowerCase().includes(searchTerm.toLowerCase());
+      } else {
+        return false;
+      }
     });
   }
 }

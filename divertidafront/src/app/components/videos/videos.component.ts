@@ -5,7 +5,7 @@ import { Video } from '../interfaces/videos';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
-type VideoProperty = "title" | "description" | "category";
+type VideoProperty = "title" | "descriptions" | "category";
 @Component({
   selector: 'app-videos',
   templateUrl: './videos.component.html',
@@ -18,7 +18,7 @@ export class VideosComponent implements OnInit {
 
   public selectedCategory: VideoProperty = "title";
   public searchTerm: string = '';
-  category: string = '';
+  public categories: string[] = [];
 
   public selectedOptions: string[] = [];
   filteredVideos: Video[] = [];
@@ -31,68 +31,103 @@ export class VideosComponent implements OnInit {
     this.showRecommendedVideos = true;
   }
 
+  // filterVideos() {
+  //   try {
+  //     this.showRecommendedVideos = false;
+
+  //     if (this.searchTerm === null || this.searchTerm === undefined) {
+  //       return;
+  //     }
+
+  //     this._videosService.getVideos().subscribe((videos) => {
+  //       this.filteredVideos = videos;
+
+  //       this.categories = ['title', 'descriptions', 'category'];
+
+  //       if (this.categories.includes(this.selectedCategory)) {
+  //         let findSelectedCategory: Video[] = this.filteredVideos.filter(item => {
+  //           return item[this.selectedCategory] && item[this.selectedCategory].toString().toLowerCase().includes(this.searchTerm.toLowerCase());
+  //         });
+
+  //         if (findSelectedCategory.length === 0) {
+  //           this.filteredVideos = [];
+  //           return;
+  //         }
+  //       }
+  //     });
+
+  //   } catch (err: any) {
+  //     this._router.navigate(['/error']).then(() => {
+  //       window.location.reload();
+  //       this.filteredVideos = [];
+  //     });
+  //   }
+  // }
   filterVideos() {
     try {
       this.showRecommendedVideos = false;
-
-      if (this.searchTerm === null || this.searchTerm === undefined) {
+  
+      if (this.searchTerm === null || this.searchTerm === undefined || this.searchTerm === '') {
         return;
       }
-
+  
       this._videosService.getVideos().subscribe((videos) => {
         this.filteredVideos = videos;
-
-        this.selectedOptions = ['title', 'description', 'category'];
-
+  
+        // Filtrar por categoría si la categoría es la propiedad seleccionada
         if (this.selectedCategory === 'category') {
-          this.filterByCategory();
+          this.filteredVideos = this.filteredVideos.filter(item => {
+            return item.categoriesVideo && item.categoriesVideo.nameCategory.toLowerCase().includes(this.searchTerm.toLowerCase());
+          });
         } else {
-          this.filterByTitleOrDescription();
+          // Filtrar por título o descripción
+          this.filteredVideos = this.filteredVideos.filter(item => {
+            return (item.title && item.title.toLowerCase().includes(this.searchTerm.toLowerCase())) ||
+                   (item.description && item.description.toLowerCase().includes(this.searchTerm.toLowerCase()));
+          });
         }
       });
-
+  
     } catch (err: any) {
       console.log("ERROR: Al filtrar los vídeos.");
-      this._router.navigate(['/error']).then(() => {
-        window.location.reload();
-      });
       this.filteredVideos = [];
     }
   }
 
-  filterByTitleOrDescription() {
-    // Realizar búsqueda por título o descripción
-    this._videosService.getVideos().subscribe((videos) => {
-      this.filteredVideos = videos.filter(item => {
-        return (item.title && item.title.toLowerCase().includes(this.searchTerm.toLowerCase())) ||
-          (item.description && item.description.toLowerCase().includes(this.searchTerm.toLowerCase()));
-      });
+  // filterByTitleOrDescription() {
+  //   // Realizar búsqueda por título o descripción
+  //   this._videosService.getVideos().subscribe((videos) => {
+  //     this.filteredVideos = videos.filter(item => {
+  //       return (item.title && item.title.toLowerCase().includes(this.searchTerm.toLowerCase())) ||
+  //         (item.description && item.description.toLowerCase().includes(this.searchTerm.toLowerCase()));
+  //     });
 
-      if (this.filteredVideos.length === 0) {
-        this.filteredVideos = [];
-        this._router.navigate(['/error']).then(() => {
-          window.location.reload();
-        });
-        return;
-      }
-    });
-  }
+  //     if (this.filteredVideos.length === 0) {
+  //       this.filteredVideos = [];
+  //       this._router.navigate(['/error']).then(() => {
+  //         window.location.reload();
+  //       });
+  //       return;
+  //     }
+  //   });
+  // }
 
- async filterByCategory() {
+  // async filterByCategory(searchTerm: string) {
+  //   try {
+  //     const category = this.searchTerm.toLowerCase();
+  //     this.filteredVideos = await this._videosService.getVideosByCategories(category);
 
-    this.searchTerm = this.category.toLowerCase();
-
-    this.filteredVideos = await this._videosService.getVideosByCategories(this.category);
-
-    if (this.filteredVideos.length === 0 || this.filteredVideos === undefined) {
-      this.filteredVideos = [];
-      this._router.navigate(['/error']).then(() => {
-        window.location.reload();
-      });
-      return;
-    }
-     return this.filteredVideos;
-  }
+  //     if (this.filteredVideos.length === 0) {
+  //       console.log("Losiento no hay vídeos con esa categorías");
+  //     }
+  //   } catch (err) {
+  //     this._router.navigate(['/error']).then(() => {
+  //       window.location.reload();
+  //     });
+  //     console.log(err);
+  //     this.filteredVideos = [];
+  //   }
+  // }
 
   async editFavorite(idVideo: number) {
     const idPerson = await this._storageService.getUserId('loggedInUser');

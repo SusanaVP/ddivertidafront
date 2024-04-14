@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { StoryCategory } from '../components/interfaces/storyCategory';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 import { Stories } from '../components/interfaces/stories';
@@ -14,13 +13,13 @@ export class StoryService {
 
   constructor(private _http: HttpClient) { }
 
-  getStory(): Observable<StoryCategory[]> {
-    return this._http.get<StoryCategory[]>(this.apiUrl);
+  getStory(): Observable<Stories[]> {
+    return this._http.get<Stories[]>(this.apiUrl);
   }
 
-  async getStoriesByCategory(category: string): Promise<Stories[]> {
+  async getStoriesByCategory(categoryId: number): Promise<Stories[]> {
     try {
-      const result = await this._http.get<Stories[]>(`${this.apiUrl}/storiesByCategory/${category}`).toPromise();
+      const result = await this._http.get<Stories[]>(`${this.apiUrl}/storiesByCategory/${categoryId}`).toPromise();
 
       if (result?.length === 0 || result === undefined || result === null) {
         console.error('La respuesta del servidor es indefinida.');

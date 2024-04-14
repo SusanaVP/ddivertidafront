@@ -5,6 +5,8 @@ import { VideosService } from '../../services/videos.service';
 import { StorageService } from '../../services/storage.service';
 import { Video } from '../interfaces/videos';
 import { Router } from '@angular/router';
+import { CategoryVideo, categoriesVideos } from '../interfaces/categoryVideo';
+import { CategoryStory } from '../interfaces/categoryStory';
 
 
 @Component({
@@ -19,15 +21,22 @@ export class RecommendedVideosComponent implements OnInit {
   slideWidth = 0;
   favoriteVideosIds: Set<number> = new Set<number>();
 
+
   constructor(private _videosService: VideosService, private _storageService: StorageService, private _sanitizer: DomSanitizer, private _router: Router) { }
 
   ngOnInit(): void {
     this._videosService.getRecommendedVideos().subscribe((videos: Video[]) => {
       this.recommendedVideos = videos;
+    
     }, (error) => {
       console.log('Error al obtener los videos recomendados:');
       this.recommendedVideos = [];
     });
+  }
+  
+  getCategoriaVideo(categoryId: number): string {
+    const category = categoriesVideos.find(a => a.id === categoryId);
+    return category ? category.nameCategory : '';
   }
 
   async editFavorite(idVideo: number) {

@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { StoryService } from '../../services/story.service';
 import { Stories } from '../interfaces/stories';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
+import { CategoryStory, categoriesStories } from '../interfaces/categoryStory';
 
 @Component({
   selector: 'app-story',
@@ -25,14 +25,23 @@ export class StoryComponent implements OnInit {
     // });
   }
 
-  async moreView(category: string) {
-    this.categorySelected = category;
+  async getCategoryStory(nameCategory: string) {
+    const name = categoriesStories.find((cn: CategoryStory )=> cn.nameCategory === nameCategory);
+    const categoryId = name ? name.id : 0;
+
     try {
-      const storiesCategory = await this._storyService.getStoriesByCategory(category);
-      if (storiesCategory.length === 0) {
-        alert("No hay historias en esta categoría");
+      const stories = await this._storyService.getStoriesByCategory(categoryId);
+
+      if (stories.length > 0 || stories !== undefined) {
+        const navigationExtras: NavigationExtras = {
+          state: {
+            stories: stories
+          }
+        };
+  
+        this._router.navigate(['/viewStories'], navigationExtras);
       }
-      console.log(storiesCategory);
+
     } catch (error) {
       console.error('Error al obtener historias por categoría:', error);
       this._router.navigate(['/error']).then(() => {
