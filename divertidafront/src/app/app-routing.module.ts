@@ -9,6 +9,7 @@ import { EventsComponent } from './components/events/events.component';
 import { RiddlesComponent } from './components/riddles/riddles.component';
 import { StoryComponent } from './components/story/story.component';
 import { ErrorComponent } from './components/error/error.component';
+import { BlogEntryFormComponent } from './components/blog-entry-form/blog-entry-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'events', component: EventsComponent },
   { path: 'riddles', component: RiddlesComponent },
   { path: 'story', component: StoryComponent },
-  { path: 'error', component: ErrorComponent }
+  { path: 'error', component: ErrorComponent },
+  { path: 'blog-entry-form', component: BlogEntryFormComponent }
 ];
 
 @NgModule({

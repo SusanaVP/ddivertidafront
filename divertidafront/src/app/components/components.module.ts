@@ -10,12 +10,13 @@ import { LoginComponent } from './login/login.component';
 import { RiddlesComponent } from './riddles/riddles.component';
 import { StoryComponent } from './story/story.component';
 import { VideosComponent } from './videos/videos.component';
-import { ROUTES, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NavComponent } from './nav/nav.component';
 import { ErrorComponent } from './error/error.component';
 import { PipesModule } from "../pipes/pipes.module";
 import { RecommendedVideosComponent } from './recommended-videos/recommended-videos.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BlogEntryFormComponent } from './blog-entry-form/blog-entry-form.component';
 
 
 
@@ -33,7 +34,8 @@ import { FormsModule } from '@angular/forms';
         VideosComponent,
         NavComponent,
         ErrorComponent,
-        RecommendedVideosComponent
+        RecommendedVideosComponent,
+        BlogEntryFormComponent
     ],
     exports: [
         BlogComponent,
@@ -48,13 +50,16 @@ import { FormsModule } from '@angular/forms';
         VideosComponent,
         NavComponent,
         ErrorComponent,
-        RecommendedVideosComponent
+        RecommendedVideosComponent,
+        ReactiveFormsModule,
+        BlogEntryFormComponent
     ],
     imports: [
         CommonModule,
         RouterModule,
         PipesModule,
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule
     ]
 })
 export class ComponentsModule { }
