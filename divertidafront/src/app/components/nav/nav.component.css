@@ -33,3 +33,9 @@
     color: white;
     border-radius: 10px;
 }
+
+.nav-link:hover{
+    background-color: rgb(185, 80, 61);
+    color: white;
+    border-radius: 10px;
+}

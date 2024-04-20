@@ -34,4 +34,14 @@ export class BlogService {
     const response: string | undefined = await this._http.get(url, { responseType: 'text' }).toPromise();
     return response!;
   }
+
+  // onUpload(): void {
+  //   const formData = new FormData();
+  //   formData.append('file', this.selectedFile);
+  
+  //   this._http.post('URL_DEL_SERVIDOR', formData)
+  //     .subscribe(response => {
+  //       // Maneja la respuesta del servidor si es necesario
+  //     });
+  // }
 }

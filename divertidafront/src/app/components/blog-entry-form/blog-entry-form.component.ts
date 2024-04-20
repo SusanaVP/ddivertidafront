@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BlogService } from '../../services/blog.service';
 import { UserService } from '../../services/user.service';
@@ -13,10 +13,13 @@ import { User } from '../interfaces/user';
 })
 export class BlogEntryFormComponent {
   @Input() id_person: number | undefined;
-
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  
   public entryForm: FormGroup;
   imageData: string | undefined;
   fileToUpload: File | null = null;
+  selectedFile: File | undefined;
+  showPreview: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -80,13 +83,13 @@ export class BlogEntryFormComponent {
     }*/
   };
 
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {
-      this.fileToUpload = file;
-      this.readImageFile(file);
-    }
-  }
+  // onFileSelected(event: any) {
+  //   const file: File = event.target.files[0];
+  //   if (file) {
+  //     this.fileToUpload = file;
+  //     this.readImageFile(file);
+  //   }
+  // }
 
   readImageFile(file: File) {
     const reader = new FileReader();
@@ -96,4 +99,28 @@ export class BlogEntryFormComponent {
     reader.readAsDataURL(file);
   }
 
+  cancelPicture() {
+    this.showPreview = false;
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = ''; // Establece el valor del campo de entrada de archivos como cadena vacía
+    }
+  }
+
+  cancelEntryBlog() {
+    this._router.navigate(['/blog']).then(() => {
+    });
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imageData = e.target.result;
+        this.showPreview = true; // Mostrar la vista previa de la imagen
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 }
