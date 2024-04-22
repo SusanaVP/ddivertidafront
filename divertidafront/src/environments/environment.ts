@@ -1,16 +1,16 @@
 export const environment = {
     production: false,
-    baseUrl: 'http://192.168.1.137:8081/',
+    baseUrl: 'http://localhost:8081/',
   
-    userUrl: 'http://192.168.1.137:8081/person',
+    userUrl: 'http://localhost:8081/person',
   
-    videoUrl: 'http://192.168.1.137:8081/video',
+    videoUrl: 'http://localhost:8081/video',
   
-    blogUrl: 'http://192.168.1.137:8081/blog',
+    blogUrl: 'http://localhost:8081/blog',
   
-    eventUrl: 'http://192.168.1.137:8081/events',
+    eventUrl: 'http://localhost:8081/events',
 
-    storyUrl: 'http://192.168.1.137:8081/story',
+    storyUrl: 'http://localhost:8081/story',
 
-    riddlesUrl: 'http://192.168.1.137:8081/riddles'
+    riddlesUrl: 'http://localhost:8081/riddles'
   };

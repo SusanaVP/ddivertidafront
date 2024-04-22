@@ -17,6 +17,8 @@ import { PipesModule } from "../pipes/pipes.module";
 import { RecommendedVideosComponent } from './recommended-videos/recommended-videos.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlogEntryFormComponent } from './blog-entry-form/blog-entry-form.component';
+import { ViewStoriesComponent } from './view-stories/view-stories.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 
 
@@ -35,7 +37,9 @@ import { BlogEntryFormComponent } from './blog-entry-form/blog-entry-form.compon
         NavComponent,
         ErrorComponent,
         RecommendedVideosComponent,
-        BlogEntryFormComponent
+        BlogEntryFormComponent,
+        ViewStoriesComponent,
+        SignInComponent
     ],
     exports: [
         BlogComponent,
@@ -52,7 +56,9 @@ import { BlogEntryFormComponent } from './blog-entry-form/blog-entry-form.compon
         ErrorComponent,
         RecommendedVideosComponent,
         ReactiveFormsModule,
-        BlogEntryFormComponent
+        BlogEntryFormComponent,
+        ViewStoriesComponent,
+        SignInComponent
     ],
     imports: [
         CommonModule,

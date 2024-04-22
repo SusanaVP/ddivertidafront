@@ -39,7 +39,9 @@ export class StoryComponent implements OnInit {
           }
         };
   
-        this._router.navigate(['/viewStories'], navigationExtras);
+        this._router.navigate(['/view-stories'], navigationExtras);
+      }else {
+        console.log("la lista de historias esta vacía");
       }
 
     } catch (error) {
