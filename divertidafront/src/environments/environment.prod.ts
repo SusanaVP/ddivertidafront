@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-  
+  /*Tengo que colocar la url del backend subido a heroku*/
     baseUrl: 'http://localhost:8081/',
   
     userUrl: 'http://localhost:8081/person',
