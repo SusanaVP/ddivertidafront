@@ -3,12 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
+    "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:divertidafront": "node dist/divertidafront/server/server.mjs",
-    "heroku-postbuild": "ng build --prod"
+    "serve:ssr:divertidafront": "node dist/divertidafront/server/server.mjs"
   },
   "private": true,
   "dependencies": {
@@ -26,11 +25,7 @@
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.3",
-    "@angular/cli": "^17.3.2",
-    "@angular/compiler-cli": "^17.3.0",
-    "typescript": "~5.4.2",
-    "path": "0.12.7"
+    "zone.js": "~0.14.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.2",
@@ -46,9 +41,5 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.4.2"
-  },
-  "engines": {
-    "node": "18.17.1",
-    "npm": "10.5.0"
   }
 }
