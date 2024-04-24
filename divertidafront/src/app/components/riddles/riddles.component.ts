@@ -40,7 +40,9 @@ riddles: Riddles[] | undefined = [];
   
         this._router.navigate(['/viewRiddles'], navigationExtras);
       }
-
+      this._router.navigate(['/error']).then(() => {
+        window.location.reload();
+      });
     } catch (error) {
       console.error('Error al obtener adivinanzas por categoría:', error);
       this._router.navigate(['/error']).then(() => {

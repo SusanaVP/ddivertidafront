@@ -1,16 +1,16 @@
 export const environment = {
     production: false,
-    baseUrl: 'http://localhost:8081/',
+    baseUrl: 'https://ddivertida-83acd5ff25f3.herokuapp.com/',
   
-    userUrl: 'http://localhost:8081/person',
+    userUrl: 'https://ddivertida-83acd5ff25f3.herokuapp.com/person',
   
-    videoUrl: 'http://localhost:8081/video',
+    videoUrl: 'https://ddivertida-83acd5ff25f3.herokuapp.com/video',
   
-    blogUrl: 'http://localhost:8081/blog',
+    blogUrl: 'https://ddivertida-83acd5ff25f3.herokuapp.com/blog',
   
-    eventUrl: 'http://localhost:8081/events',
+    eventUrl: 'https://ddivertida-83acd5ff25f3.herokuapp.com/events',
 
-    storyUrl: 'http://localhost:8081/story',
+    storyUrl: 'https://ddivertida-83acd5ff25f3.herokuapp.com/story',
 
-    riddlesUrl: 'http://localhost:8081/riddles'
+    riddlesUrl: 'https://ddivertida-83acd5ff25f3.herokuapp.com/riddles'
   };
